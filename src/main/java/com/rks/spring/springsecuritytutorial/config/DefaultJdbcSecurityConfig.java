@@ -9,24 +9,48 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
-@Configuration
+import javax.sql.DataSource;
+
+@Profile(ApplicationConstant.DEFAULT_JDBC_SECURITY_PROFILE)
 @EnableWebSecurity
-@Profile(ApplicationConstant.SECURITY_PROFILE)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+@Configuration
+public class DefaultJdbcSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private DataSource dataSource;
 
     /**
-     * This method is used to create in memory user
+     * This method is used to create jdbc Authentication with default Spring Security Database Schema
+     * create default user
      * @param authenticationManagerBuilder
      * @throws Exception
      */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.inMemoryAuthentication()
-                .withUser("user").password(passwordEncoder().encode("pass"))
-                .authorities("ROLE_USER");
+        authenticationManagerBuilder
+                .jdbcAuthentication()
+                .dataSource(dataSource)
+                .withDefaultSchema()
+                .withUser(User.withUsername("user")
+                        .password(passwordEncoder().encode("pass"))
+                        .roles("USER"));
+    }
+
+    /**
+     * This method is used to create default JbdcUserDetailsManager.
+     * This instance controllers creating, retrieving, updating the userDetails.
+     * @return jdbcUserDetailsManager
+     */
+    @Bean
+    public JdbcUserDetailsManager jdbcUserDetailsManager(){
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
+        jdbcUserDetailsManager.setDataSource(dataSource);
+        return jdbcUserDetailsManager;
     }
 
     /**
@@ -51,5 +75,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
