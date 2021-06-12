@@ -21,3 +21,8 @@ Reference Link: https://docs.spring.io/spring-security/site/docs/current/referen
 
 select * from users;
 select * from authorities;
+
+Custom Exception handler
+reference Link :
+https://www.baeldung.com/global-error-handler-in-a-spring-rest-api
+https://www.baeldung.com/rest-api-error-handling-best-practices

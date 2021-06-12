@@ -1,11 +1,22 @@
 package com.rks.spring.springsecuritytutorial.modal.request;
 
+
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.rks.spring.springsecuritytutorial.constant.ValidationErrorConstant.*;
+
+
 public class UserRequest implements Serializable {
+
+    @NotBlank(message = USER_NAME_NOT_NULL)
     private String username;
+
+    @NotBlank(message = PASSWORD_NOT_NULL)
+    @Size(min = 3, message = PASSWORD_MIN_3_CHAR)
     private String password;
+
     private List<String> roles;
 
     public String getUsername() {

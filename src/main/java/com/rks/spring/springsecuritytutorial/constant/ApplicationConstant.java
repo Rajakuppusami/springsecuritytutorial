@@ -13,6 +13,7 @@ public class ApplicationConstant {
     public static final String REGISTER_USER_END_POINT = "/register-user";
     public static final String RETRIEVE_USER_END_POINT = "/get-user";
     public static final String DELETE_USER_END_POINT = "/delete-user";
+    public static final String UPDATE_CREDENTIAL_END_POINT = "/update-credential";
 
     public static final String WEB_PATH = "/web/api";
     public static final String REGISTER_PAGE_URL = "/register";
