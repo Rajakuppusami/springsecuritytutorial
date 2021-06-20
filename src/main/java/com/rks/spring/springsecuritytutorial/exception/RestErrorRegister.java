@@ -9,7 +9,8 @@ public enum RestErrorRegister {
     API_REQUEST_VALIDATION_FAILED("API_REQUEST_VALIDATION_FAILED", "1", null, null),
     USER_NOT_FOUND("USER_NOT_FOUND", "2", "username is invalid", "username"),
     USER_ALREADY_EXIST("USER_ALREADY_EXIST","3","username is already exist, please try another username","username"),
-    OLD_PASSWORD_INCORRECT("OLD_PASSWORD_INCORRECT","4","old password doesn't matched please enter correct password", "oldPassword");
+    OLD_PASSWORD_INCORRECT("OLD_PASSWORD_INCORRECT","4","old password doesn't matched please enter correct password", "oldPassword"),
+    AUTHENTICATION_FAILED("AUTHENTICATION_FAILED", "5", "username/password incorrect", null);
 
     private String errorTitle;
     private String errorCode;
